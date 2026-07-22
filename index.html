@@ -1,0 +1,3559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XG108 · 模型工作室</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+    <style>
+        /* ============================
+                   我要死了……我要死了……终于把功能做好了……我手机要卡死了，我操了真尼玛难做，真服了要求多又难改，摸了好久，终于给他磨出来了，有bug的话，下一次再改吧！部署1.0………
+                   ============================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Kiwi Maru', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #fcf9f5;
+            color: #3a3345;
+            line-height: 1.7;
+            padding: 0;
+            margin: 0;
+            transition: background 0.4s, color 0.4s;
+        }
+
+        body.dark-mode {
+            background: #1a1625;
+            color: #e0dce8;
+        }
+        body.dark-mode .navbar {
+            background: rgba(26, 22, 37, 0.92);
+            border-bottom-color: #3a3345;
+        }
+        body.dark-mode .hero {
+            background: linear-gradient(165deg, #1f1a2e 0%, #1a1625 60%);
+            border-bottom-color: #3a3345;
+        }
+        body.dark-mode .hero-card {
+            background: #25203a;
+            border-color: #3a3345;
+            box-shadow: 12px 12px 0px #2f2a45;
+        }
+        body.dark-mode .hero-card .studio-name {
+            color: #d0c8e0;
+        }
+        body.dark-mode .hero-card .studio-desc {
+            color: #a098b8;
+        }
+        body.dark-mode .hero-card .tags span {
+            background: #2f2a45;
+            color: #b0a8c8;
+            border-color: #3a3345;
+        }
+        body.dark-mode .hero .tagline {
+            background: rgba(255, 255, 255, 0.04);
+            color: #b0a8c8;
+        }
+        body.dark-mode .hero .tagline strong {
+            color: #e0dce8;
+        }
+        body.dark-mode .hero-badge {
+            background: #2f2a45;
+            color: #b0a8c8;
+            border-color: #3a3345;
+        }
+        body.dark-mode #about,
+        body.dark-mode #members,
+        body.dark-mode #progress,
+        body.dark-mode #subscribe {
+            background: #1a1625;
+            border-color: #3a3345;
+        }
+        body.dark-mode #about .about-text p {
+            color: #b0a8c8;
+        }
+        body.dark-mode #about .about-text p strong {
+            color: #e0dce8;
+        }
+        body.dark-mode .stat-item {
+            background: #25203a;
+            border-color: #3a3345;
+        }
+        body.dark-mode .stat-item .number {
+            color: #b89fc9;
+        }
+        body.dark-mode .stat-item .label {
+            color: #a098b8;
+        }
+        body.dark-mode .feature-item {
+            background: #1f1a2e;
+            border-color: #3a3345;
+            box-shadow: 4px 4px 0px #25203a;
+        }
+        body.dark-mode .feature-item .title {
+            color: #e0dce8;
+        }
+        body.dark-mode .feature-item .desc {
+            color: #a098b8;
+        }
+        body.dark-mode #projects,
+        body.dark-mode #gallery,
+        body.dark-mode #faq,
+        body.dark-mode #contact,
+        body.dark-mode #roadmap,
+        body.dark-mode #logs,
+        body.dark-mode #vote,
+        body.dark-mode #stats {
+            background: #1a1625;
+        }
+        body.dark-mode .project-card,
+        body.dark-mode .gallery-item,
+        body.dark-mode .faq-item,
+        body.dark-mode .contact-card,
+        body.dark-mode .roadmap-item,
+        body.dark-mode .log-item,
+        body.dark-mode .vote-card,
+        body.dark-mode .stat-card {
+            background: #25203a;
+            border-color: #3a3345;
+            box-shadow: 6px 6px 0px #2f2a45;
+        }
+        body.dark-mode .project-card p,
+        body.dark-mode .project-card ul li,
+        body.dark-mode .gallery-item .gallery-desc,
+        body.dark-mode .faq-item .faq-answer,
+        body.dark-mode .roadmap-item .roadmap-desc,
+        body.dark-mode .log-item .log-desc,
+        body.dark-mode .vote-card p {
+            color: #a098b8;
+        }
+        body.dark-mode .project-card .icon {
+            background: #2f2a45;
+            border-color: #3a3345;
+        }
+        body.dark-mode .project-tag {
+            background: #2f2a45;
+            color: #b0a8c8;
+            border-color: #3a3345;
+        }
+        body.dark-mode .project-tag.free {
+            background: #1f3a3a;
+            color: #6ab0b0;
+            border-color: #2a4a4a;
+        }
+        body.dark-mode .project-tag.paid {
+            background: #3a1f2a;
+            color: #d47a9a;
+            border-color: #4a2a3a;
+        }
+        body.dark-mode .project-tag.pending {
+            background: #2a253a;
+            color: #8a7a9a;
+            border-color: #3a3345;
+        }
+        body.dark-mode .member-card {
+            background: #25203a;
+            border-color: #3a3345;
+            box-shadow: 6px 6px 0px #2f2a45;
+        }
+        body.dark-mode .member-card p {
+            color: #a098b8;
+        }
+        body.dark-mode .contact-item {
+            border-color: #3a3345;
+        }
+        body.dark-mode .contact-item .ci-icon {
+            background: #2f2a45;
+            border-color: #3a3345;
+            color: #b89fc9;
+        }
+        body.dark-mode .contact-item .ci-text .value {
+            color: #d0c8e0;
+        }
+        body.dark-mode .contact-info .note-box {
+            background: #25203a;
+            border-color: #3a3345;
+            color: #b0a8c8;
+        }
+        body.dark-mode .contact-info .note-box strong {
+            color: #e0dce8;
+        }
+        body.dark-mode footer {
+            background: #1a1625;
+            border-color: #3a3345;
+        }
+        body.dark-mode footer .footer-links a {
+            color: #8a7a9a;
+        }
+        body.dark-mode footer .footer-links a:hover {
+            color: #d0c8e0;
+        }
+        body.dark-mode .visitor-counter {
+            background: #25203a;
+            border-color: #3a3345;
+            color: #b0a8c8;
+        }
+        body.dark-mode .visitor-counter .count {
+            color: #d0c8e0;
+        }
+        body.dark-mode .doodle-line {
+            background: #3a3345;
+        }
+        body.dark-mode .doodle-line::after {
+            color: #3a3345;
+        }
+        body.dark-mode .section-header .label {
+            background: #2f2a45;
+            color: #b0a8c8;
+            border-color: #3a3345;
+        }
+        body.dark-mode .section-desc {
+            color: #a098b8;
+        }
+        body.dark-mode .btn-outline {
+            border-color: #3a3345;
+            color: #d0c8e0;
+        }
+        body.dark-mode .btn-outline:hover {
+            background: #2f2a45;
+            border-color: #8b6f9e;
+        }
+        body.dark-mode .sticky-note-trigger,
+        body.dark-mode .back-to-top {
+            background: #25203a;
+            border-color: #3a3345;
+            color: #b0a8c8;
+            box-shadow: 6px 6px 0px #2f2a45;
+        }
+        body.dark-mode .sticky-note-trigger:hover,
+        body.dark-mode .back-to-top:hover {
+            background: #2f2a45;
+        }
+        body.dark-mode .note-popup {
+            background: #25203a;
+            border-color: #3a3345;
+            color: #d0c8e0;
+        }
+        body.dark-mode .note-popup .close-btn {
+            background: #3a1f2a;
+            border-color: #4a2a3a;
+            color: #d47a9a;
+        }
+        body.dark-mode .toast {
+            background: #2f2a45;
+            border-color: #3a3345;
+            color: #d0c8e0;
+        }
+        body.dark-mode .announcement-bar {
+            background: #2f2a45;
+            border-color: #3a3345;
+            color: #b0a8c8;
+        }
+        body.dark-mode .announcement-bar .close-announce {
+            color: #6a5a7a;
+        }
+        body.dark-mode .announcement-bar .close-announce:hover {
+            color: #b0a8c8;
+        }
+        body.dark-mode .subscribe-box {
+            background: #25203a;
+            border-color: #3a3345;
+            box-shadow: 8px 8px 0px #2f2a45;
+        }
+        body.dark-mode .subscribe-box .sub-form input {
+            background: #1f1a2e;
+            border-color: #3a3345;
+            color: #e0dce8;
+        }
+        body.dark-mode .subscribe-box p {
+            color: #a098b8;
+        }
+        body.dark-mode .roadmap-item .roadmap-status {
+            background: #2f2a45;
+            color: #b0a8c8;
+        }
+        body.dark-mode .roadmap-item .roadmap-status.done {
+            background: #1f3a3a;
+            color: #6ab0b0;
+        }
+        body.dark-mode .roadmap-item .roadmap-status.ongoing {
+            background: #3a2a1f;
+            color: #d4a06a;
+        }
+        body.dark-mode .roadmap-item .roadmap-status.planning {
+            background: #2a253a;
+            color: #8a7a9a;
+        }
+        body.dark-mode .vote-card .vote-bar {
+            background: #2f2a45;
+        }
+        body.dark-mode .vote-card .vote-fill {
+            background: #8b6f9e;
+        }
+        body.dark-mode .stat-card .stat-number {
+            color: #b89fc9;
+        }
+        body.dark-mode .log-item .log-date {
+            color: #6a5a7a;
+        }
+        body.dark-mode .member-status .status-dot {
+            border-color: #3a3345;
+        }
+
+        a {
+            color: #8b6f9e;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        a:hover {
+            color: #5d4a6e;
+        }
+        body.dark-mode a {
+            color: #b89fc9;
+        }
+        body.dark-mode a:hover {
+            color: #d0c8e0;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 0 22px;
+        }
+
+        /* ===== 公告栏 ===== */
+        .announcement-bar {
+            background: #ede4f0;
+            border-bottom: 2px dashed #d5c8d8;
+            padding: 8px 0;
+            font-size: 0.82rem;
+            color: #5a4a6a;
+            text-align: center;
+            position: relative;
+            transition: background 0.4s, border-color 0.4s, color 0.4s;
+        }
+        .announcement-bar .close-announce {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            color: #b0a0b8;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .announcement-bar .close-announce:hover {
+            color: #5d4a6e;
+        }
+        .announcement-bar i {
+            color: #b89fc9;
+            margin-right: 6px;
+        }
+        .announcement-bar.hidden {
+            display: none;
+        }
+
+        /* ===== 导航 ===== */
+        .navbar {
+            background: rgba(252, 249, 245, 0.92);
+            backdrop-filter: blur(8px);
+            padding: 18px 0 14px;
+            border-bottom: 2px dashed #e8dee8;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: background 0.4s, border-color 0.4s;
+        }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #5d4a6e;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+        .logo i {
+            color: #b89fc9;
+            font-size: 1.3rem;
+        }
+        .logo span {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: #b89fc9;
+            letter-spacing: 2px;
+            margin-left: 4px;
+        }
+        .logo .patch {
+            position: absolute;
+            top: -12px;
+            right: -30px;
+            font-size: 0.5rem;
+            background: #f0e8f0;
+            color: #8a7a9a;
+            padding: 1px 10px;
+            border-radius: 20px;
+            border: 1px dashed #d5c8d8;
+            transform: rotate(8deg);
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            font-weight: 500;
+            font-size: 0.92rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: #6a5a7a;
+            padding: 4px 0;
+            border-bottom: 2px dashed transparent;
+            transition: 0.3s;
+        }
+        .nav-links a:hover {
+            border-bottom-color: #b89fc9;
+            color: #3a3345;
+        }
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            color: #5d4a6e;
+            cursor: pointer;
+        }
+        .dark-toggle {
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            color: #8a7a9a;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 30px;
+            transition: 0.3s;
+            border: 1px dashed #d5c8d8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .dark-toggle:hover {
+            background: #ede4f0;
+            border-color: #b89fc9;
+        }
+        body.dark-mode .dark-toggle {
+            color: #b89fc9;
+            border-color: #3a3345;
+        }
+        body.dark-mode .dark-toggle:hover {
+            background: #2f2a45;
+        }
+
+        /* ===== Hero ===== */
+        .hero {
+            padding: 70px 0 50px;
+            background: linear-gradient(165deg, #f7f0f7 0%, #fcf9f5 60%);
+            border-bottom: 2px dashed #e8dee8;
+            position: relative;
+            transition: background 0.4s, border-color 0.4s;
+        }
+        .hero::after {
+            content: '◈ ◈ ◈';
+            position: absolute;
+            bottom: -8px;
+            left: 30px;
+            font-size: 0.7rem;
+            color: #d5c8d8;
+            letter-spacing: 6px;
+            opacity: 0.6;
+        }
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .hero-content {
+            position: relative;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #ede4f0;
+            color: #7a648a;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            padding: 4px 18px;
+            border-radius: 30px;
+            margin-bottom: 14px;
+            border: 1px dashed #d5c8d8;
+        }
+        .hero h1 {
+            font-size: 3.4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 4px;
+        }
+        .hero h1 .highlight {
+            color: #8b6f9e;
+            position: relative;
+        }
+        .hero h1 .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: #e4d6e8;
+            opacity: 0.5;
+            border-radius: 4px;
+            z-index: -1;
+        }
+        .hero .sub {
+            font-size: 1.1rem;
+            color: #8b7a9a;
+            font-weight: 400;
+            margin-bottom: 6px;
+            letter-spacing: 2px;
+        }
+        .hero .tagline {
+            color: #6a5a7a;
+            font-size: 0.98rem;
+            line-height: 1.9;
+            margin-bottom: 26px;
+            max-width: 420px;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 8px 16px;
+            border-radius: 12px;
+            border-left: 4px solid #d5c8d8;
+        }
+        .hero .tagline strong {
+            color: #3a3345;
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 30px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            text-decoration: none;
+            background: #fff;
+            color: #3a3345;
+            border: 2px solid #e8dee8;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+        .btn-primary {
+            background: #8b6f9e;
+            color: #fff;
+            border-color: #8b6f9e;
+            box-shadow: 0 4px 16px rgba(139, 111, 158, 0.2);
+        }
+        .btn-primary:hover {
+            background: #7a5a8a;
+            transform: translateY(-2px) rotate(-0.5deg);
+            box-shadow: 0 8px 28px rgba(139, 111, 158, 0.25);
+            color: #fff;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px dashed #c8b8d0;
+        }
+        .btn-outline:hover {
+            background: #f7f0f7;
+            border-color: #8b6f9e;
+            transform: translateY(-2px) rotate(0.5deg);
+        }
+        .btn-sm {
+            padding: 6px 16px;
+            font-size: 0.75rem;
+        }
+        body.dark-mode .btn-primary {
+            background: #8b6f9e;
+            border-color: #8b6f9e;
+        }
+        body.dark-mode .btn-primary:hover {
+            background: #7a5a8a;
+        }
+
+        .hero-card {
+            background: #fffcf9;
+            border-radius: 40px 20px 40px 20px;
+            padding: 36px 32px 32px;
+            border: 2px solid #e8dee8;
+            box-shadow: 12px 12px 0px #ede4f0, 0 4px 24px rgba(139, 111, 158, 0.06);
+            transform: rotate(1deg);
+            transition: 0.3s;
+            position: relative;
+        }
+        .hero-card .sticker {
+            position: absolute;
+            top: -10px;
+            right: -8px;
+            background: #f7e8ee;
+            color: #b86a8a;
+            font-size: 0.55rem;
+            font-weight: 600;
+            padding: 2px 14px;
+            border-radius: 30px;
+            border: 1px solid #e8d0d8;
+            transform: rotate(6deg);
+            letter-spacing: 1px;
+        }
+        .hero-card .sticker2 {
+            position: absolute;
+            bottom: -6px;
+            left: -6px;
+            background: #e4f0f0;
+            color: #4a7a7a;
+            font-size: 0.5rem;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 30px;
+            border: 1px solid #c8e0e0;
+            transform: rotate(-4deg);
+        }
+        .hero-card:hover {
+            transform: rotate(0deg) translateY(-4px);
+            box-shadow: 16px 16px 0px #ede4f0, 0 8px 32px rgba(139, 111, 158, 0.08);
+        }
+        .hero-card .big-icon {
+            font-size: 2.8rem;
+            color: #b89fc9;
+            margin-bottom: 8px;
+            display: inline-block;
+            transform: rotate(-6deg);
+        }
+        .hero-card .studio-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #4d3e5e;
+            letter-spacing: -0.5px;
+        }
+        .hero-card .studio-desc {
+            color: #8a7a9a;
+            font-size: 0.9rem;
+            margin-top: 4px;
+            line-height: 1.7;
+        }
+        .hero-card .tags {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .hero-card .tags span {
+            background: #f7f0f7;
+            padding: 3px 14px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #7a648a;
+            border: 1px solid #e8dee8;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .hero-card .tags span:nth-child(2) {
+            transform: rotate(-1deg);
+        }
+        .hero-card .tags span:nth-child(3) {
+            transform: rotate(1.5deg);
+        }
+
+        /* ===== 通用 ===== */
+        section {
+            padding: 64px 0;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 44px;
+            position: relative;
+        }
+        .section-header .label {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #8b7a9a;
+            background: #ede4f0;
+            padding: 4px 20px;
+            border-radius: 30px;
+            margin-bottom: 10px;
+            border: 1px dashed #d5c8d8;
+        }
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            color: #3a3345;
+            letter-spacing: -0.5px;
+        }
+        .section-title .highlight {
+            color: #8b6f9e;
+            position: relative;
+        }
+        .section-title .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: #e4d6e8;
+            opacity: 0.4;
+            border-radius: 4px;
+            z-index: -1;
+        }
+        .section-desc {
+            color: #7a6a8a;
+            font-size: 1.02rem;
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 1.9;
+        }
+        .doodle-line {
+            width: 60px;
+            height: 4px;
+            background: #e4d6e8;
+            border-radius: 4px;
+            margin: 12px auto 0;
+            position: relative;
+        }
+        .doodle-line::after {
+            content: '~';
+            position: absolute;
+            right: -20px;
+            top: -8px;
+            color: #d5c8d8;
+            font-size: 1.2rem;
+            transform: rotate(20deg);
+        }
+
+        /* ===== About ===== */
+        #about {
+            background: #fffcf9;
+            border-top: 2px dashed #ede4f0;
+            border-bottom: 2px dashed #ede4f0;
+            transition: background 0.4s, border-color 0.4s;
+        }
+        #about .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .about-text p {
+            color: #5a4a6a;
+            font-size: 1.02rem;
+            line-height: 2;
+            margin-bottom: 16px;
+        }
+        .about-text p strong {
+            color: #3a3345;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 18px;
+        }
+        .stat-item {
+            background: #f7f0f7;
+            padding: 18px 8px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid #ede4f0;
+            transition: 0.3s;
+            position: relative;
+        }
+        .stat-item:hover {
+            transform: translateY(-3px) rotate(-0.5deg);
+            border-color: #d5c8d8;
+        }
+        .stat-item .patch-dot {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 10px;
+            height: 10px;
+            background: #b89fc9;
+            border-radius: 50%;
+            border: 1px solid #fff;
+            opacity: 0.4;
+        }
+        .stat-item .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #8b6f9e;
+        }
+        .stat-item .label {
+            color: #7a6a8a;
+            font-size: 0.82rem;
+            font-weight: 500;
+        }
+
+        .about-features {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .feature-item {
+            background: #fcf9f5;
+            padding: 16px 20px;
+            border-radius: 20px;
+            border: 1px solid #ede4f0;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: 0.3s;
+            box-shadow: 4px 4px 0px #f0e8f0;
+            position: relative;
+        }
+        .feature-item:hover {
+            transform: translateX(4px) translateY(-2px);
+            box-shadow: 6px 6px 0px #e8dee8;
+        }
+        .feature-item .patch-label {
+            position: absolute;
+            top: -6px;
+            right: 12px;
+            font-size: 0.45rem;
+            background: #ede4f0;
+            padding: 0 10px;
+            border-radius: 20px;
+            color: #8a7a9a;
+            border: 1px dashed #d5c8d8;
+            letter-spacing: 1px;
+        }
+        .feature-item i {
+            font-size: 1.3rem;
+            color: #8b6f9e;
+            width: 30px;
+            text-align: center;
+        }
+        .feature-item .title {
+            font-weight: 600;
+            color: #3a3345;
+        }
+        .feature-item .desc {
+            color: #7a6a8a;
+            font-size: 0.88rem;
+        }
+
+        /* ===== Projects ===== */
+        #projects {
+            background: #fcf9f5;
+            transition: background 0.4s;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 28px;
+        }
+        .project-card {
+            background: #fffcf9;
+            border-radius: 32px 16px 32px 16px;
+            padding: 30px 26px 26px;
+            border: 2px solid #ede4f0;
+            box-shadow: 6px 6px 0px #f0e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .project-card:nth-child(2) {
+            transform: rotate(0.5deg);
+        }
+        .project-card:nth-child(3) {
+            transform: rotate(-0.5deg);
+        }
+        .project-card:hover {
+            transform: translateY(-6px) rotate(0deg);
+            box-shadow: 10px 10px 0px #e8dee8;
+            border-color: #d5c8d8;
+        }
+        .project-card .patch-sticker {
+            position: absolute;
+            top: -8px;
+            right: -4px;
+            font-size: 0.5rem;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 30px;
+            border: 1px solid #d5c8d8;
+            transform: rotate(4deg);
+            background: #f7f0f7;
+            color: #8a7a9a;
+        }
+        .project-card .patch-sticker.green {
+            background: #e4f0f0;
+            color: #4a7a7a;
+            border-color: #c8e0e0;
+        }
+        .project-card .patch-sticker.pink {
+            background: #f7e8ee;
+            color: #b86a8a;
+            border-color: #e8d0d8;
+        }
+        .project-card .patch-sticker.blue {
+            background: #e8ecf7;
+            color: #6a7ab8;
+            border-color: #d0d8e8;
+        }
+        .project-card .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 18px 8px 18px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 14px;
+            background: #ede4f0;
+            color: #8b6f9e;
+            border: 1px solid #e0d4e0;
+        }
+        .project-card .icon.pink {
+            background: #f7e8ee;
+            color: #b86a8a;
+        }
+        .project-card .icon.blue {
+            background: #e8ecf7;
+            color: #6a7ab8;
+        }
+        .project-card .icon.cyan {
+            background: #e4f0f0;
+            color: #4a8a8a;
+        }
+        .project-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        .project-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 2px 14px;
+            border-radius: 30px;
+            background: #ede4f0;
+            color: #7a648a;
+            margin-bottom: 10px;
+            border: 1px solid #e0d4e0;
+        }
+        .project-tag.free {
+            background: #e4f0f0;
+            color: #4a7a7a;
+            border-color: #c8e0e0;
+        }
+        .project-tag.paid {
+            background: #f7e8ee;
+            color: #b86a8a;
+            border-color: #e8d0d8;
+        }
+        .project-tag.pending {
+            background: #f0ecf0;
+            color: #8a7a9a;
+            border-color: #ddd4dd;
+        }
+        .project-card p {
+            color: #5a4a6a;
+            font-size: 0.93rem;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+        .project-card ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2px;
+        }
+        .project-card ul li {
+            color: #6a5a7a;
+            font-size: 0.88rem;
+            padding: 3px 0 3px 22px;
+            position: relative;
+        }
+        .project-card ul li::before {
+            content: '·';
+            position: absolute;
+            left: 4px;
+            color: #b89fc9;
+            font-weight: 700;
+            font-size: 1.4rem;
+            line-height: 1;
+            top: 2px;
+        }
+        .project-card .link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            font-weight: 600;
+            color: #8b6f9e;
+            border-bottom: 2px dashed transparent;
+            transition: 0.3s;
+        }
+        .project-card .link:hover {
+            color: #5d4a6e;
+            gap: 12px;
+            border-bottom-color: #c8b8d0;
+        }
+
+        /* ===== 作品展示 ===== */
+        #gallery {
+            background: #fcf9f5;
+            transition: background 0.4s;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .gallery-item {
+            background: #fffcf9;
+            border-radius: 24px 12px 24px 12px;
+            padding: 20px 16px;
+            border: 2px solid #ede4f0;
+            box-shadow: 4px 4px 0px #f0e8f0;
+            text-align: center;
+            transition: 0.3s;
+            position: relative;
+        }
+        .gallery-item:nth-child(2) {
+            transform: rotate(0.8deg);
+        }
+        .gallery-item:nth-child(3) {
+            transform: rotate(-0.6deg);
+        }
+        .gallery-item:nth-child(4) {
+            transform: rotate(0.4deg);
+        }
+        .gallery-item:hover {
+            transform: translateY(-4px) rotate(0deg);
+            box-shadow: 8px 8px 0px #e8dee8;
+            border-color: #d5c8d8;
+        }
+        .gallery-item .gallery-icon {
+            font-size: 2.8rem;
+            color: #b89fc9;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .gallery-item .gallery-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .gallery-item .gallery-desc {
+            color: #8a7a9a;
+            font-size: 0.78rem;
+            margin-top: 2px;
+        }
+        .gallery-item .gallery-tag {
+            display: inline-block;
+            font-size: 0.5rem;
+            background: #ede4f0;
+            padding: 1px 12px;
+            border-radius: 30px;
+            border: 1px dashed #d5c8d8;
+            color: #8a7a9a;
+            margin-top: 6px;
+        }
+        .gallery-item .gallery-tag.sold {
+            background: #f7e8ee;
+            color: #b86a8a;
+            border-color: #e8d0d8;
+        }
+        .gallery-item .gallery-tag.available {
+            background: #e4f0f0;
+            color: #4a7a7a;
+            border-color: #c8e0e0;
+        }
+        body.dark-mode .gallery-item {
+            background: #25203a;
+            border-color: #3a3345;
+            box-shadow: 4px 4px 0px #2f2a45;
+        }
+        body.dark-mode .gallery-item .gallery-desc {
+            color: #a098b8;
+        }
+        body.dark-mode .gallery-item .gallery-tag {
+            background: #2f2a45;
+            border-color: #3a3345;
+            color: #b0a8c8;
+        }
+        body.dark-mode .gallery-item .gallery-tag.sold {
+            background: #3a1f2a;
+            color: #d47a9a;
+            border-color: #4a2a3a;
+        }
+        body.dark-mode .gallery-item .gallery-tag.available {
+            background: #1f3a3a;
+            color: #6ab0b0;
+            border-color: #2a4a4a;
+        }
+
+        /* ===== 开发路线图 (新增) ===== */
+        #roadmap {
+            background: #fffcf9;
+            border-top: 2px dashed #ede4f0;
+            border-bottom: 2px dashed #ede4f0;
+            transition: background 0.4s, border-color 0.4s;
+        }
+        .roadmap-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .roadmap-item {
+            background: #fffcf9;
+            border-radius: 20px 8px 20px 8px;
+            padding: 18px 22px;
+            border: 2px solid #ede4f0;
+            box-shadow: 4px 4px 0px #f0e8f0;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: 0.3s;
+            position: relative;
+        }
+        .roadmap-item:hover {
+            transform: translateX(4px) translateY(-2px);
+            box-shadow: 6px 6px 0px #e8dee8;
+        }
+        .roadmap-item .roadmap-icon {
+            font-size: 1.6rem;
+            color: #b89fc9;
+            flex-shrink: 0;
+            width: 40px;
+            text-align: center;
+        }
+        .roadmap-item .roadmap-content {
+            flex: 1;
+        }
+        .roadmap-item .roadmap-title {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .roadmap-item .roadmap-desc {
+            color: #6a5a7a;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .roadmap-item .roadmap-status {
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 2px 14px;
+            border-radius: 30px;
+            background: #ede4f0;
+            color: #8a7a9a;
+            border: 1px dashed #d5c8d8;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+        .roadmap-item .roadmap-status.done {
+            background: #e4f0f0;
+            color: #4a7a7a;
+            border-color: #c8e0e0;
+        }
+        .roadmap-item .roadmap-status.ongoing {
+            background: #f7e8ee;
+            color: #b86a8a;
+            border-color: #e8d0d8;
+        }
+        .roadmap-item .roadmap-status.planning {
+            background: #f0ecf0;
+            color: #8a7a9a;
+            border-color: #ddd4dd;
+        }
+        body.dark-mode .roadmap-item {
+            background: #25203a;
+            border-color: #3a3345;
+            box-shadow: 4px 4px 0px #2f2a45;
+        }
+        body.dark-mode .roadmap-item .roadmap-desc {
+            color: #a098b8;
+        }
+
+        /* ===== 开发日志 (新增) ===== */
+        #logs {
+            background: #fcf9f5;
+            transition: background 0.4s;
+        }
+        .logs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .log-item {
+            background: #fffcf9;
+            border-radius: 20px 8px 20px 8px;
+            padding: 16px 20px;
+            border: 2px solid #ede4f0;
+            box-shadow: 4px 4px 0px #f0e8f0;
+            transition: 0.3s;
+            position: relative;
+        }
+        .log-item:nth-child(2) {
+            transform: rotate(0.5deg);
+        }
+        .log-item:nth-child(3) {
+            transform: rotate(-0.4deg);
+        }
+        .log-item:hover {
+            transform: translateY(-3px) rotate(0deg);
+            box-shadow: 6px 6px 0px #e8dee8;
+        }
+        .log-item .log-date {
+            font-size: 0.65rem;
+            color: #b0a0b8;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .log-item .log-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin: 2px 0;
+        }
+        .log-item .log-desc {
+            color: #6a5a7a;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .log-item .log-tag {
+            display: inline-block;
+            font-size: 0.45rem;
+            background: #ede4f0;
+            padding: 0 10px;
+            border-radius: 30px;
+            border: 1px dashed #d5c8d8;
+            color: #8a7a9a;
+            margin-top: 4px;
+        }
+        body.dark-mode .log-item {
+            background: #25203a;
+            border-color: #3a3345;
+            box-shadow: 4px 4px 0px #2f2a45;
+        }
+        body.dark-mode .log-item .log-desc {
+            color: #a098b8;
+        }
+        body.dark-mode .log-item .log-tag {
+            background: #2f2a45;
+            border-color: #3a3345;
+            color: #b0a8c8;
+        }
+        body.dark-mode .log-item .log-date {
+            color: #6a5a7a;
+        }
+
+        /* ===== 愿望投票 (新增) ===== */
+        #vote {
+            background: #fffcf9;
+            border-top: 2px dashed #ede4f0;
+            border-bottom: 2px dashed #ede4f0;
+            transition: background 0.4s, border-color 0.4s;
+        }
+        .vote-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .vote-card {
+            background: #fffcf9;
+            border-radius: 24px 12px 24px 12px;
+            padding: 22px 20px;
+            border: 2px solid #ede4f0;
+            box-shadow: 4px 4px 0px #f0e8f0;
+            transition: 0.3s;
+            text-align: center;
+            cursor: pointer;
+        }
+        .vote-card:hover {
+            transform: translateY(-4px) rotate(-0.5deg);
+            box-shadow: 8px 8px 0px #e8dee8;
+            border-color: #d5c8d8;
+        }
+        .vote-card .vote-icon {
+            font-size: 2.4rem;
+            color: #b89fc9;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .vote-card .vote-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .vote-card .vote-desc {
+            color: #6a5a7a;
+            font-size: 0.78rem;
+            margin: 2px 0 10px;
+        }
+        .vote-card .vote-bar-wrap {
+            background: #ede4f0;
+            border-radius: 30px;
+            height: 8px;
+            overflow: hidden;
+            margin: 6px 0 4px;
+            border: 1px solid #e0d4e0;
+        }
+        .vote-card .vote-fill {
+            height: 100%;
+            background: #8b6f9e;
+            border-radius: 30px;
+            transition: width 0.6s ease;
+            width: 0%;
+        }
+        .vote-card .vote-count {
+            font-size: 0.7rem;
+            color: #8a7a9a;
+            display: flex;
+            justify-content: space-between;
+        }
+        .vote-card .vote-btn {
+            margin-top: 8px;
+            font-size: 0.7rem;
+            padding: 4px 16px;
+            border-radius: 30px;
+            border: 1px dashed #d5c8d8;
+            background: transparent;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: inherit;
+            color: #6a5a7a;
+        }
+        .vote-card .vote-btn:hover {
+            background: #ede4f0;
+            border-color: #8b6f9e;
+        }
+        .vote-card .vote-btn.voted {
+            background: #e4f0f0;
+            border-color: #6aaa8a;
+            color: #4a7a7a;
+            cursor: default;
+        }
+        body.dark-mode .vote-card {
+            background: #25203a;
+            border-color: #3a3345;
+            box-shadow: 4px 4px 0px #2f2a45;
+        }
+        body.dark-mode .vote-card .vote-desc {
+            color: #a098b8;
+        }
+        body.dark-mode .vote-card .vote-bar-wrap {
+            background: #2f2a45;
+            border-color: #3a3345;
+        }
+        body.dark-mode .vote-card .vote-count {
+            color: #6a5a7a;
+        }
+        body.dark-mode .vote-card .vote-btn {
+            color: #b0a8c8;
+            border-color: #3a3345;
+        }
+        body.dark-mode .vote-card .vote-btn:hover {
+            background: #2f2a45;
+            border-color: #8b6f9e;
+        }
+        body.dark-mode .vote-card .vote-btn.voted {
+            background: #1f3a3a;
+            border-color: #6aaa8a;
+            color: #6ab0b0;
+        }
+
+        /* ===== 统计面板 (新增) ===== */
+        #stats {
+            background: #fcf9f5;
+            transition: background 0.4s;
+        }
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .stat-card {
+            background: #fffcf9;
+            border-radius: 24px 12px 24px 12px;
+            padding: 22px 16px;
+            border: 2px solid #ede4f0;
+            box-shadow: 4px 4px 0px #f0e8f0;
+            text-align: center;
+            transition: 0.3s;
+            position: relative;
+        }
+        .stat-card:nth-child(2) {
+            transform: rotate(0.6deg);
+        }
+        .stat-card:nth-child(3) {
+            transform: rotate(-0.4deg);
+        }
+        .stat-card:nth-child(4) {
+            transform: rotate(0.3deg);
+        }
+        .stat-card:hover {
+            transform: translateY(-4px) rotate(0deg);
+            box-shadow: 6px 6px 0px #e8dee8;
+        }
+        .stat-card .stat-icon {
+            font-size: 1.8rem;
+            color: #b89fc9;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .stat-card .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #5d4a6e;
+            display: block;
+        }
+        .stat-card .stat-label {
+            font-size: 0.75rem;
+            color: #8a7a9a;
+            font-weight: 500;
+        }
+        .stat-card .stat-patch {
+            position: absolute;
+            top: -6px;
+            right: -4px;
+            font-size: 0.4rem;
+            background: #ede4f0;
+            padding: 0 8px;
+            border-radius: 20px;
+            border: 1px dashed #d5c8d8;
+            color: #8a7a9a;
+            transform: rotate(4deg);
+        }
+        body.dark-mode .stat-card {
+            background: #25203a;
+            border-color: #3a3345;
+            box-shadow: 4px 4px 0px #2f2a45;
+        }
+        body.dark-mode .stat-card .stat-number {
+            color: #b89fc9;
+        }
+        body.dark-mode .stat-card .stat-label {
+            color: #a098b8;
+        }
+        body.dark-mode .stat-card .stat-patch {
+            background: #2f2a45;
+            border-color: #3a3345;
+            color: #6a5a7a;
+        }
+
+        /* ===== Members ===== */
+        #members {
+            background: #fffcf9;
+            border-top: 2px dashed #ede4f0;
+            border-bottom: 2px dashed #ede4f0;
+            transition: background 0.4s, border-color 0.4s;
+        }
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 28px;
+            max-width: 660px;
+            margin: 0 auto;
+        }
+        .member-card {
+            background: #fcf9f5;
+            border-radius: 30px 12px 30px 12px;
+            padding: 26px 18px 22px;
+            text-align: center;
+            border: 2px solid #ede4f0;
+            box-shadow: 6px 6px 0px #f0e8f0;
+            transition: 0.3s;
+            position: relative;
+        }
+        .member-card:nth-child(2) {
+            transform: rotate(-0.8deg);
+        }
+        .member-card:nth-child(3) {
+            transform: rotate(0.8deg);
+        }
+        .member-card:hover {
+            transform: translateY(-4px) rotate(0deg);
+            box-shadow: 10px 10px 0px #e8dee8;
+        }
+        .member-card .tiny-badge {
+            position: absolute;
+            bottom: -6px;
+            right: 10px;
+            font-size: 0.45rem;
+            background: #ede4f0;
+            padding: 0 10px;
+            border-radius: 20px;
+            border: 1px dashed #d5c8d8;
+            color: #8a7a9a;
+            transform: rotate(-3deg);
+        }
+        .member-card .avatar {
+            width: 76px;
+            height: 76px;
+            border-radius: 50% 30% 50% 30%;
+            margin: 0 auto 12px;
+            background: linear-gradient(145deg, #b89fc9, #8b6f9e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            transform: rotate(-4deg);
+            border: 2px solid #d5c8d8;
+        }
+        .member-card .avatar.h {
+            background: linear-gradient(145deg, #c88aaa, #b06a8a);
+        }
+        .member-card .avatar.p {
+            background: linear-gradient(145deg, #8aaac8, #6a8ab8);
+        }
+        .member-card h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+        .member-card .role {
+            color: #8b6f9e;
+            font-size: 0.82rem;
+            font-weight: 500;
+        }
+        .member-card p {
+            color: #6a5a7a;
+            font-size: 0.88rem;
+            margin-top: 6px;
+            line-height: 1.6;
+        }
+        /* 成员状态 */
+        .member-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 8px;
+            font-size: 0.7rem;
+            color: #8a7a9a;
+        }
+        .member-status .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            border: 1px solid #d5c8d8;
+        }
+        .member-status .status-dot.online {
+            background: #6aaa8a;
+            border-color: #6aaa8a;
+        }
+        .member-status .status-dot.away {
+            background: #d4a06a;
+            border-color: #d4a06a;
+        }
+        .member-status .status-dot.offline {
+            background: #b0a0b8;
+            border-color: #b0a0b8;
+        }
+
+        /* ===== Contact ===== */
+        #contact {
+            background: #fcf9f5;
+            transition: background 0.4s;
+        }
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+        .contact-info h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .contact-info p {
+            color: #5a4a6a;
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px dashed #ede4f0;
+        }
+        .contact-item:last-child {
+            border-bottom: none;
+        }
+        .contact-item .ci-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 14px 6px 14px 6px;
+            background: #ede4f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8b6f9e;
+            font-size: 1rem;
+            flex-shrink: 0;
+            border: 1px solid #e0d4e0;
+        }
+        .contact-item .ci-text .label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: #8a7a9a;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        .contact-item .ci-text .value {
+            color: #3a3345;
+        }
+        .contact-item .ci-text .value a {
+            color: #8b6f9e;
+            font-weight: 500;
+        }
+        .contact-item .ci-text .value a:hover {
+            color: #5d4a6e;
+        }
+        .contact-card {
+            background: #fffcf9;
+            border-radius: 32px 16px 32px 16px;
+            padding: 30px 28px;
+            border: 2px solid #ede4f0;
+            box-shadow: 8px 8px 0px #f0e8f0;
+            position: relative;
+        }
+        .contact-card .patch-note {
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            font-size: 0.5rem;
+            background: #f7e8ee;
+            color: #b86a8a;
+            padding: 1px 14px;
+            border-radius: 30px;
+            border: 1px dashed #e8d0d8;
+            transform: rotate(-2deg);
+            letter-spacing: 1px;
+        }
+        .contact-card h4 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .contact-card p {
+            color: #6a5a7a;
+            font-size: 0.92rem;
+            margin-bottom: 18px;
+        }
+        .contact-card input,
+        .contact-card textarea {
+            width: 100%;
+            padding: 13px 16px;
+            border-radius: 16px 6px 16px 6px;
+            border: 2px solid #e8dee8;
+            background: #fcf9f5;
+            color: #3a3345;
+            font-size: 0.92rem;
+            outline: none;
+            margin-bottom: 14px;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+        .contact-card input:focus,
+        .contact-card textarea:focus {
+            border-color: #b89fc9;
+            box-shadow: 0 0 0 4px rgba(139, 111, 158, 0.06);
+            background: #fffcf9;
+        }
+        .contact-card textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .contact-card .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .contact-info .note-box {
+            margin-top: 20px;
+            padding: 14px 18px;
+            background: #f7f0f7;
+            border-radius: 20px 8px 20px 8px;
+            border: 1px dashed #d5c8d8;
+            font-size: 0.88rem;
+            color: #5a4a6a;
+            line-height: 1.8;
+            position: relative;
+        }
+        .contact-info .note-box .patch-tag {
+            position: absolute;
+            top: -8px;
+            right: 12px;
+            font-size: 0.45rem;
+            background: #ede4f0;
+            padding: 0 12px;
+            border-radius: 20px;
+            border: 1px dashed #d5c8d8;
+            color: #8a7a9a;
+            transform: rotate(3deg);
+        }
+        .contact-info .note-box i {
+            color: #b89fc9;
+            margin-right: 6px;
+        }
+        .contact-info .note-box strong {
+            color: #3a3345;
+        }
+
+        /* ===== 访客计数器 ===== */
+        .visitor-counter {
+            background: #f7f0f7;
+            padding: 10px 20px;
+            border-radius: 60px;
+            border: 1px dashed #d5c8d8;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.8rem;
+            color: #6a5a7a;
+            margin-top: 16px;
+            box-shadow: 4px 4px 0px #ede4f0;
+            transform: rotate(-0.5deg);
+        }
+        .visitor-counter i {
+            color: #b89fc9;
+        }
+        .visitor-counter .count {
+            font-weight: 700;
+            color: #5d4a6e;
+            font-size: 1rem;
+            min-width: 30px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background: #fffcf9;
+            border-top: 2px dashed #ede4f0;
+            padding: 28px 0 22px;
+            transition: background 0.4s, border-color 0.4s;
+        }
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+        footer .footer-logo {
+            font-weight: 700;
+            color: #5d4a6e;
+            font-size: 0.95rem;
+        }
+        footer .footer-logo i {
+            color: #b89fc9;
+        }
+        footer .footer-links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+        footer .footer-links a {
+            color: #8a7a9a;
+            font-size: 0.82rem;
+            border-bottom: 1px dashed transparent;
+        }
+        footer .footer-links a:hover {
+            color: #3a3345;
+            border-bottom-color: #c8b8d0;
+        }
+        footer .copy {
+            width: 100%;
+            text-align: center;
+            color: #b0a0b8;
+            font-size: 0.78rem;
+            margin-top: 8px;
+            border-top: 1px dashed #ede4f0;
+            padding-top: 14px;
+            position: relative;
+        }
+        footer .footer-patch {
+            font-size: 0.5rem;
+            color: #c8b8d0;
+            background: #f7f0f7;
+            padding: 0 12px;
+            border-radius: 20px;
+            border: 1px dashed #e0d4e0;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-left: 8px;
+        }
+        body.dark-mode footer .footer-patch {
+            background: #2f2a45;
+            border-color: #3a3345;
+            color: #6a5a7a;
+        }
+
+        /* ===== 回到顶部 ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 80px;
+            right: 24px;
+            background: #fcf9f5;
+            border: 2px dashed #d5c8d8;
+            border-radius: 60px;
+            padding: 10px 14px;
+            font-size: 1rem;
+            color: #6a5a7a;
+            cursor: pointer;
+            box-shadow: 6px 6px 0px #ede4f0;
+            transition: 0.3s;
+            z-index: 50;
+            opacity: 0;
+            pointer-events: none;
+            font-family: inherit;
+        }
+        .back-to-top.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .back-to-top:hover {
+            transform: translateY(-4px) rotate(-1deg);
+            box-shadow: 8px 8px 0px #e8dee8;
+        }
+        body.dark-mode .back-to-top {
+            background: #25203a;
+            border-color: #3a3345;
+            color: #b0a8c8;
+            box-shadow: 6px 6px 0px #2f2a45;
+        }
+        body.dark-mode .back-to-top:hover {
+            background: #2f2a45;
+        }
+
+        /* ===== 小纸条 ===== */
+        .note-popup {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fffcf9;
+            border: 2px dashed #d5c8d8;
+            border-radius: 24px 12px 24px 12px;
+            padding: 16px 28px;
+            box-shadow: 12px 12px 0px #ede4f0, 0 8px 32px rgba(0, 0, 0, 0.06);
+            z-index: 999;
+            max-width: 400px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #3a3345;
+            animation: popIn 0.4s ease;
+        }
+        .note-popup.show {
+            display: block;
+        }
+        .note-popup .close-btn {
+            position: absolute;
+            top: -8px;
+            right: -6px;
+            background: #f7e8ee;
+            border: 1px solid #e8d0d8;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: #b86a8a;
+            transition: 0.2s;
+        }
+        .note-popup .close-btn:hover {
+            background: #e8d0d8;
+        }
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.9) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1) translateY(0);
+            }
+        }
+
+        .sticky-note-trigger {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #fcf9f5;
+            border: 2px dashed #d5c8d8;
+            border-radius: 60px;
+            padding: 10px 18px;
+            font-size: 0.8rem;
+            color: #6a5a7a;
+            cursor: pointer;
+            box-shadow: 6px 6px 0px #ede4f0;
+            transition: 0.3s;
+            z-index: 50;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .sticky-note-trigger:hover {
+            transform: translateY(-4px) rotate(-1deg);
+            box-shadow: 8px 8px 0px #e8dee8;
+        }
+        .sticky-note-trigger i {
+            color: #b89fc9;
+        }
+
+        /* ===== Toast ===== */
+        .toast {
+            position: fixed;
+            top: 80px;
+            right: 24px;
+            background: #fffcf9;
+            border: 2px dashed #d5c8d8;
+            border-radius: 20px 8px 20px 8px;
+            padding: 14px 24px;
+            box-shadow: 8px 8px 0px #ede4f0;
+            z-index: 999;
+            font-size: 0.9rem;
+            color: #3a3345;
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-width: 360px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .toast.show {
+            transform: translateX(0);
+        }
+        .toast i {
+            color: #8b6f9e;
+            font-size: 1.2rem;
+        }
+        .toast .toast-close {
+            cursor: pointer;
+            color: #b0a0b8;
+            font-size: 1rem;
+            margin-left: 8px;
+        }
+        .toast .toast-close:hover {
+            color: #5d4a6e;
+        }
+
+        /* ===== 订阅 ===== */
+        #subscribe {
+            background: #fffcf9;
+            border-top: 2px dashed #ede4f0;
+            border-bottom: 2px dashed #ede4f0;
+            transition: background 0.4s, border-color 0.4s;
+        }
+        .subscribe-box {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #fcf9f5;
+            border-radius: 32px 16px 32px 16px;
+            padding: 30px 28px;
+            border: 2px solid #ede4f0;
+            box-shadow: 8px 8px 0px #f0e8f0;
+            text-align: center;
+            position: relative;
+        }
+        .subscribe-box .patch-sub {
+            position: absolute;
+            top: -8px;
+            left: 20px;
+            font-size: 0.45rem;
+            background: #ede4f0;
+            padding: 0 12px;
+            border-radius: 20px;
+            border: 1px dashed #d5c8d8;
+            color: #8a7a9a;
+            transform: rotate(-2deg);
+            letter-spacing: 1px;
+        }
+        .subscribe-box h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .subscribe-box p {
+            color: #6a5a7a;
+            font-size: 0.88rem;
+            margin-bottom: 16px;
+        }
+        .subscribe-box .sub-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .subscribe-box .sub-form input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 16px 6px 16px 6px;
+            border: 2px solid #e8dee8;
+            background: #fffcf9;
+            font-size: 0.9rem;
+            outline: none;
+            font-family: inherit;
+            min-width: 180px;
+        }
+        .subscribe-box .sub-form input:focus {
+            border-color: #b89fc9;
+            box-shadow: 0 0 0 4px rgba(139, 111, 158, 0.06);
+        }
+        .subscribe-box .sub-form .btn {
+            flex-shrink: 0;
+        }
+        body.dark-mode .subscribe-box {
+            background: #25203a;
+            border-color: #3a3345;
+            box-shadow: 8px 8px 0px #2f2a45;
+        }
+        body.dark-mode .subscribe-box .patch-sub {
+            background: #2f2a45;
+            border-color: #3a3345;
+            color: #b0a8c8;
+        }
+        body.dark-mode .subscribe-box p {
+            color: #a098b8;
+        }
+        body.dark-mode .subscribe-box .sub-form input {
+            background: #1f1a2e;
+            border-color: #3a3345;
+            color: #e0dce8;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 900px) {
+            .hero .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero .tagline {
+                margin: 0 auto 24px;
+                text-align: left;
+            }
+            .btn-group {
+                justify-content: center;
+            }
+            #about .grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .logs-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-panel {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .roadmap-item {
+                flex-wrap: wrap;
+            }
+            .roadmap-item .roadmap-status {
+                margin-left: auto;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: #fcf9f5;
+                padding: 16px 0;
+                border-top: 2px dashed #ede4f0;
+                margin-top: 12px;
+                gap: 12px;
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .nav-toggle {
+                display: block;
+            }
+            .hero h1 {
+                font-size: 2.6rem;
+            }
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            .members-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero-card {
+                padding: 28px 20px;
+                transform: rotate(0deg);
+            }
+            .hero-card:hover {
+                transform: translateY(-4px);
+            }
+            .project-card:nth-child(2),
+            .project-card:nth-child(3),
+            .member-card:nth-child(2),
+            .member-card:nth-child(3) {
+                transform: rotate(0deg);
+            }
+            .back-to-top {
+                bottom: 90px;
+                right: 16px;
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            .sticky-note-trigger {
+                bottom: 16px;
+                right: 16px;
+                padding: 8px 14px;
+                font-size: 0.7rem;
+            }
+            .note-popup {
+                max-width: 90%;
+                padding: 14px 18px;
+                bottom: 80px;
+                font-size: 0.82rem;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .vote-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .subscribe-box .sub-form {
+                flex-direction: column;
+            }
+            .subscribe-box .sub-form .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .logo .patch {
+                display: none;
+            }
+            .hero-card .sticker,
+            .hero-card .sticker2 {
+                display: none;
+            }
+            .stats-panel {
+                grid-template-columns: 1fr 1fr;
+            }
+            .logs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            .members-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .contact-card {
+                padding: 20px 16px;
+            }
+            .hero::after {
+                display: none;
+            }
+            .visitor-counter {
+                font-size: 0.7rem;
+                padding: 6px 14px;
+            }
+            .visitor-counter .count {
+                font-size: 0.85rem;
+            }
+            .toast {
+                top: 72px;
+                right: 12px;
+                left: 12px;
+                max-width: none;
+                padding: 12px 18px;
+                font-size: 0.82rem;
+                border-radius: 16px 6px 16px 6px;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            .vote-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-panel {
+                grid-template-columns: 1fr 1fr;
+            }
+            .announcement-bar {
+                font-size: 0.7rem;
+                padding: 6px 12px;
+            }
+            .announcement-bar .close-announce {
+                right: 8px;
+                font-size: 0.7rem;
+            }
+            .roadmap-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            .roadmap-item .roadmap-status {
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<!-- ===== 阅读确认弹窗 ===== -->
+<!-- 把这个弹窗代码放在主页 <body> 的最前面，所有内容之前，不是放在最开头，要不然功能完整！你是聋吗？ -->
+
+<style>
+    /* ===== 弹窗遮罩 ===== */
+    .overlay-18 {
+        position: fixed;
+        inset: 0;
+        background: rgba(26, 22, 37, 0.6);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        animation: overlayFade 0.5s ease;
+        transition: opacity 0.5s ease;
+    }
+    .overlay-18.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+    @keyframes overlayFade {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    /* ===== 弹窗卡片 ===== */
+    .popup-18 {
+        background: #fcf9f5;
+        border-radius: 40px 20px 40px 20px;
+        border: 2px solid #e8dee8;
+        box-shadow: 16px 16px 0px #ede4f0, 0 8px 40px rgba(0,0,0,0.1);
+        padding: 40px 44px 36px;
+        max-width: 520px;
+        width: 100%;
+        position: relative;
+        transform: rotate(0.5deg);
+        animation: popupIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    .popup-18::-webkit-scrollbar { width: 4px; }
+    .popup-18::-webkit-scrollbar-track { background: #ede4f0; border-radius: 10px; }
+    .popup-18::-webkit-scrollbar-thumb { background: #b89fc9; border-radius: 10px; }
+
+    @keyframes popupIn {
+        0% { opacity: 0; transform: scale(0.92) rotate(-1deg) translateY(20px); }
+        100% { opacity: 1; transform: scale(1) rotate(0.5deg) translateY(0); }
+    }
+
+    /* ===== 补丁标签 ===== */
+    .popup-18 .patch-sticker {
+        position: absolute;
+        top: -10px;
+        right: -6px;
+        font-size: 0.5rem;
+        font-weight: 600;
+        padding: 2px 14px;
+        border-radius: 30px;
+        border: 1px dashed #d5c8d8;
+        transform: rotate(6deg);
+        background: #f7e8ee;
+        color: #b86a8a;
+        letter-spacing: 1px;
+    }
+    .popup-18 .patch-sticker2 {
+        position: absolute;
+        bottom: -6px;
+        left: -6px;
+        font-size: 0.45rem;
+        font-weight: 600;
+        padding: 2px 12px;
+        border-radius: 30px;
+        border: 1px dashed #d5c8d8;
+        transform: rotate(-4deg);
+        background: #e4f0f0;
+        color: #4a7a7a;
+        letter-spacing: 1px;
+    }
+
+    /* ===== 弹窗内容 ===== */
+    .popup-18 .popup-icon {
+        font-size: 2.6rem;
+        color: #b89fc9;
+        display: block;
+        text-align: center;
+        margin-bottom: 6px;
+        transform: rotate(-4deg);
+    }
+    .popup-18 h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-align: center;
+        color: #3d2e6b;
+        margin-bottom: 4px;
+        letter-spacing: -0.5px;
+    }
+    .popup-18 h2 .highlight {
+        color: #8b6f9e;
+        position: relative;
+    }
+    .popup-18 h2 .highlight::after {
+        content: '';
+        position: absolute;
+        bottom: 2px;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: #e4d6e8;
+        opacity: 0.4;
+        border-radius: 4px;
+        z-index: -1;
+    }
+    .popup-18 .sub {
+        text-align: center;
+        color: #8a7a9a;
+        font-size: 0.85rem;
+        margin-bottom: 18px;
+        letter-spacing: 0.5px;
+    }
+    .popup-18 .sub span {
+        color: #8b6f9e;
+        font-weight: 500;
+    }
+
+    /* ===== 规则列表 ===== */
+    .popup-18 .rules-list {
+        background: #f7f0f7;
+        border-radius: 20px 8px 20px 8px;
+        padding: 16px 20px;
+        border: 1px dashed #e0d4e0;
+        margin-bottom: 18px;
+    }
+    .popup-18 .rules-list ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .popup-18 .rules-list ul li {
+        padding: 4px 0 4px 24px;
+        position: relative;
+        font-size: 0.88rem;
+        color: #5a4a6a;
+        line-height: 1.7;
+    }
+    .popup-18 .rules-list ul li::before {
+        content: '✦';
+        position: absolute;
+        left: 0;
+        color: #b89fc9;
+        font-size: 0.7rem;
+        top: 5px;
+    }
+    .popup-18 .rules-list ul li strong {
+        color: #3a3345;
+    }
+
+    /* ===== 确认按钮 ===== */
+    .popup-18 .btn-confirm {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 14px 32px;
+        border-radius: 60px;
+        font-weight: 700;
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: inherit;
+        background: #8b6f9e;
+        color: #fff;
+        border: 2px solid #8b6f9e;
+        box-shadow: 0 4px 16px rgba(139, 111, 158, 0.25);
+    }
+    .popup-18 .btn-confirm:hover {
+        background: #7a5a8a;
+        transform: translateY(-3px) rotate(-0.5deg);
+        box-shadow: 0 8px 28px rgba(139, 111, 158, 0.35);
+    }
+    .popup-18 .btn-confirm i {
+        font-size: 1rem;
+    }
+
+    /* ===== 页脚小字 ===== */
+    .popup-18 .footer-note {
+        text-align: center;
+        font-size: 0.65rem;
+        color: #b0a0b8;
+        margin-top: 14px;
+        border-top: 1px dashed #ede4f0;
+        padding-top: 14px;
+        letter-spacing: 0.3px;
+    }
+    .popup-18 .footer-note a {
+        color: #8b6f9e;
+        text-decoration: none;
+        border-bottom: 1px dashed transparent;
+        transition: 0.2s;
+    }
+    .popup-18 .footer-note a:hover {
+        border-bottom-color: #d5c8d8;
+        color: #5d4a6e;
+    }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 600px) {
+        .popup-18 {
+            padding: 30px 24px 28px;
+            border-radius: 32px 16px 32px 16px;
+            box-shadow: 12px 12px 0px #ede4f0, 0 4px 24px rgba(0,0,0,0.06);
+        }
+        .popup-18 .patch-sticker,
+        .popup-18 .patch-sticker2 {
+            display: none;
+        }
+        .popup-18 h2 {
+            font-size: 1.2rem;
+        }
+        .popup-18 .rules-list {
+            padding: 12px 14px;
+        }
+        .popup-18 .rules-list ul li {
+            font-size: 0.82rem;
+        }
+        .overlay-18 {
+            padding: 12px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .popup-18 {
+            padding: 24px 16px 20px;
+        }
+        .popup-18 .popup-icon {
+            font-size: 2rem;
+        }
+        .popup-18 h2 {
+            font-size: 1rem;
+        }
+        .popup-18 .sub {
+            font-size: 0.75rem;
+        }
+        .popup-18 .btn-confirm {
+            padding: 12px 20px;
+            font-size: 0.88rem;
+        }
+    }
+
+    /* ===== 夜间模式兼容 ===== */
+    body.dark-mode .overlay-18 {
+        background: rgba(0, 0, 0, 0.7);
+    }
+    body.dark-mode .popup-18 {
+        background: #25203a;
+        border-color: #3a3345;
+        box-shadow: 16px 16px 0px #2f2a45, 0 8px 40px rgba(0,0,0,0.3);
+    }
+    body.dark-mode .popup-18 h2 {
+        color: #d0c8e0;
+    }
+    body.dark-mode .popup-18 .sub {
+        color: #a098b8;
+    }
+    body.dark-mode .popup-18 .sub span {
+        color: #b89fc9;
+    }
+    body.dark-mode .popup-18 .rules-list {
+        background: #2f2a45;
+        border-color: #3a3345;
+    }
+    body.dark-mode .popup-18 .rules-list ul li {
+        color: #b0a8c8;
+    }
+    body.dark-mode .popup-18 .rules-list ul li strong {
+        color: #e0dce8;
+    }
+    body.dark-mode .popup-18 .footer-note {
+        border-top-color: #3a3345;
+        color: #6a5a7a;
+    }
+    body.dark-mode .popup-18 .footer-note a {
+        color: #b89fc9;
+    }
+    body.dark-mode .popup-18 .footer-note a:hover {
+        color: #e0dce8;
+    }
+    body.dark-mode .popup-18 .patch-sticker {
+        background: #3a1f2a;
+        border-color: #4a2a3a;
+        color: #d47a9a;
+    }
+    body.dark-mode .popup-18 .patch-sticker2 {
+        background: #1f3a3a;
+        border-color: #2a4a4a;
+        color: #6ab0b0;
+    }
+    body.dark-mode .popup-18 .btn-confirm {
+        background: #8b6f9e;
+        border-color: #8b6f9e;
+        box-shadow: 0 4px 16px rgba(139, 111, 158, 0.3);
+    }
+    body.dark-mode .popup-18 .btn-confirm:hover {
+        background: #7a5a8a;
+        border-color: #7a5a8a;
+    }
+</style>
+
+<!-- ===== 弹窗 HTML ===== -->
+<div class="overlay-18" id="ageOverlay">
+    <div class="popup-18">
+        <!-- 补丁标签 -->
+        <span class="patch-sticker">✦ 请先阅读</span>
+        <span class="patch-sticker2">✦ 友好社区</span>
+
+        <!-- 图标 -->
+        <span class="popup-icon"><i class="fas fa-hand-peace"></i></span>
+
+        <!-- 标题 -->
+        <h2>
+            欢迎来到 <span class="highlight">XG108</span>
+        </h2>
+        <p class="sub">
+            这里是一个 <span>温暖、友善</span> 的小角落 ✦
+        </p>
+
+        <!-- 规则列表 -->
+        <div class="rules-list">
+            <ul>
+                <li><strong>友善交流</strong> — 彼此尊重，不争吵、不引战</li>
+                <li><strong>遵守规则</strong> — 入群即视为同意 <a href="#" onclick="rules.html" style="color:#8b6f9e;border-bottom:1px dashed #d5c8d8;text-decoration:none;">社区入驻规则</a></li>
+                <li><strong>为爱发电</strong> — 公益社区，不接受捐款，欢迎通过购买商品支持我们</li>
+                <li><strong>共同守护</strong> — 遇到问题请联系管理员，我们会保护大家的隐私</li>
+                
+            </ul>
+        </div>
+
+        <!-- 确认按钮 -->
+        <button class="btn-confirm" id="confirmBtn">
+            <i class="fas fa-check-circle"></i> 我已阅读并同意
+        </button>
+
+        <!-- 页脚 -->
+        <div class="footer-note">
+            ✦ 点击即表示你已阅读并理解以上内容 ✦
+        </div>
+    </div>
+</div>
+
+<script>
+    // ===== 不多解释 =====
+    document.addEventListener('DOMContentLoaded', function() {
+        const overlay = document.getElementById('ageOverlay');
+        const confirmBtn = document.getElementById('confirmBtn');
+
+        // 检查是否已经确认过
+        if (localStorage.getItem('xg108_agreed') === 'true') {
+            overlay.classList.add('hidden');
+            // 移除遮罩，让内容可交互
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 500);
+        }
+
+        // 点击确认按钮
+        confirmBtn.addEventListener('click', function() {
+            // 存储确认状态（永久有效）
+            localStorage.setItem('xg108_agreed', 'true');
+            // 隐藏弹窗
+            overlay.classList.add('hidden');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 500);
+        });
+
+        // 点击遮罩空白区域不会关闭（必须点击按钮）
+        // 但保留ESC关闭功能（可选）
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !overlay.classList.contains('hidden')) {
+                // 不强制关闭，尊重用户需要点击确认
+                // 只是提示一下
+                console.log('请点击"我已阅读并同意"按钮继续');
+            }
+        });
+
+        // 控制台提示
+        console.log('%c ✦ XG108 工作室 ✦ ', 'background: #8b6f9e; color: #fff; font-size: 16px; padding: 6px 16px; border-radius: 30px; font-weight: 700;');
+        console.log('💜 欢迎来到 XG108 工作室！');
+        console.log('📮 如有问题请联系管理员');
+    });
+</script>
+<body>
+
+    <!-- ===== 公告栏 ===== -->
+    <div class="announcement-bar" id="announcementBar">
+        <i class="fas fa-bullhorn"></i>
+        ✦ 插件/模型开发中 · 闲鱼有售成品模型 · 群组持续运营中 ✦
+        <button class="close-announce" id="closeAnnounce" aria-label="关闭公告">✕</button>
+    </div>
+
+    <!-- ===== 导航 ===== -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-cube"></i> XG108
+                <span>studio</span>
+                <span class="patch">✦ 星星</span>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="菜单">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about">工作室</a></li>
+                <li><a href="#projects">项目</a></li>
+                <li><a href="#gallery">作品</a></li>
+                <li><a href="#roadmap">路线图</a></li>
+                <li><a href="#members">成员</a></li>
+                <li><a href="#contact">联系</a></li>
+                <li><a href="rules.html">条款</a></li>
+                <li>
+                    <button class="dark-toggle" id="darkToggle" aria-label="切换夜间模式">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ===== Hero ===== -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge"><i class="fas fa-feather-alt"></i> VRChat 模型创作</div>
+                <h1>
+                    XG108<br />
+                    <span class="highlight">低产 · 高质</span>
+                </h1>
+                <p class="sub">✦ 手作温度 · 匠心打磨 ✦</p>
+                <p class="tagline">
+                    专注于 <strong>VRChat</strong> 模型创作，以匠心打造每一件作品。<br />
+                    三位创作者，三个核心项目，<strong>用心</strong> 而非数量。
+                </p>
+                <div class="btn-group">
+                    <a href="#projects" class="btn btn-primary"><i class="fas fa-arrow-right"></i> 查看项目</a>
+                    <a href="#contact" class="btn btn-outline"><i class="fas fa-envelope"></i> 联系我们</a>
+                </div>
+                <div class="visitor-counter">
+                    <i class="fas fa-eye"></i>
+                    今日访客 <span class="count" id="visitorCount">0</span>
+                    <span style="font-size:0.6rem;color:#b0a0b8;">| 累计 1145</span>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-card">
+                    <span class="sticker">◈ 2025</span>
+                    <span class="sticker2">✦ 手工</span>
+                    <div class="big-icon"><i class="fas fa-cubes"></i></div>
+                    <div class="studio-name">XG108</div>
+                    <div class="studio-desc">VRChat 模型工作室 · 低产高质</div>
+                    <div class="tags">
+                        <span>◈ 公益</span>
+                        <span>◈ Booth</span>
+                        <span>◈ 手作</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== About ===== -->
+    <section id="about">
+        <div class="container">
+            <div class="grid">
+                <div class="about-text">
+                    <span class="label" style="display:inline-block;font-size:0.65rem;font-weight:500;text-transform:uppercase;letter-spacing:3px;color:#8b7a9a;background:#ede4f0;padding:4px 20px;border-radius:30px;margin-bottom:10px;border:1px dashed #d5c8d8;">关于我们</span>
+                    <h2 class="section-title" style="text-align:left;margin-bottom:10px;">以 <span class="highlight">匠心</span> 定义品质</h2>
+                    <p>
+                        <strong>XG108 工作室</strong> 成立于 2025 年，由三位志同道合的创作者共同发起。
+                        我们专注于 <strong>VRChat</strong> 模型创作，秉持 <strong>「低产高质」</strong> 的理念，
+                        用心打磨每一件作品。
+                    </p>
+                    <p>
+                        目前工作室共有 <strong>三名</strong> 核心成员，暂未计划招纳新人。
+                        我们相信，小而精的团队才能保持对品质的极致追求。
+                    </p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="patch-dot"></span>
+                            <div class="number">3</div>
+                            <div class="label">核心成员</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="patch-dot"></span>
+                            <div class="number">3</div>
+                            <div class="label">在营项目</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="patch-dot"></span>
+                            <div class="number">2025</div>
+                            <div class="label">成立年份</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <span class="patch-label">✦ 核心</span>
+                            <i class="fas fa-gem"></i>
+                            <div>
+                                <div class="title">低产高质</div>
+                                <div class="desc">每一件作品都精心雕琢</div>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="patch-label">✦ 团队</span>
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <div class="title">小而精团队</div>
+                                <div class="desc">三人同心，专注创作</div>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="patch-label">✦ 热爱</span>
+                            <i class="fas fa-heart"></i>
+                            <div>
+                                <div class="title">热爱驱动</div>
+                                <div class="desc">源于对 VRChat 的无限热爱</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Projects ===== -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-header">
+                <span class="label"><i class="fas fa-layer-group"></i> 核心项目</span>
+                <h2 class="section-title">我们的 <span class="highlight">三大</span> 项目</h2>
+                <p class="section-desc">覆盖公益、商业与未来探索，每一款都承载着我们的热爱与执着。</p>
+                <div class="doodle-line"></div>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <span class="patch-sticker green">◈ 公益</span>
+                    <div class="icon cyan"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h3>XG08</h3>
+                    <span class="project-tag free"><i class="fas fa-gift"></i> 公益项目</span>
+                    <p>以 VRChat 为核心的公益社区，提供 <strong>完全免费</strong> 的交流与支持环境。包含 VRChat 群组与 QQ 群组，不收取任何费用。</p>
+                    <ul>
+                        <li>VRChat 群组 · 虚拟社交</li>
+                        <li>QQ 群组 · 日常交流</li>
+                        <li>完全免费 · 无任何收费</li>
+                        <li>不接受捐款 · 仅可通过购买商品支持</li>
+                    </ul>
+                    <a href="http://xg08xg08.abrdns.com/" target="_blank" rel="noopener" class="link">访问群组网站 <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="project-card">
+                    <span class="patch-sticker pink">◈ Booth</span>
+                    <div class="icon pink"><i class="fas fa-store"></i></div>
+                    <h3>XG.xiao pi che</h3>
+                    <span class="project-tag paid"><i class="fas fa-coins"></i> Booth 平台</span>
+                    <p>通过 <strong>Booth</strong> 平台发布高品质 VRChat 模型、插件等创作产品。以专业水准打造，为虚拟世界提供更丰富的体验。</p>
+                    <ul>
+                        <li>VRChat 模型 · 精致设计</li>
+                        <li>插件工具 · 提升体验</li>
+                        <li>Booth 平台 · 全球发布</li>
+                        <li>商业运营 · 持续创作</li>
+                    </ul>
+                    <a href="https://xghy108.booth.pm/" target="_blank" rel="noopener" class="link">前往 Booth <i class="fas fa-arrow-right"></i></a>
+                </div>
+
+                <div class="project-card">
+                    <span class="patch-sticker blue">◈ 筹备</span>
+                    <div class="icon blue"><i class="fas fa-clock"></i></div>
+                    <h3>其他项目</h3>
+                    <span class="project-tag pending"><i class="fas fa-pause"></i> 暂未开放</span>
+                    <p>因 <strong>人手不足</strong>，更多创意项目暂未启动。未来我们将持续探索新的可能，敬请期待。</p>
+                    <ul>
+                        <li>更多模型系列 · 规划中</li>
+                        <li>虚拟世界工具 · 研发中</li>
+                        <li>社区扩展 · 筹备中</li>
+                        <li>等待时机 · 蓄势待发</li>
+                    </ul>
+                    <span class="link" style="cursor:default;color:#8a7a9a;"><i class="fas fa-hourglass-half"></i> 敬请期待</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 作品展示 ===== -->
+    <section id="gallery">
+        <div class="container">
+            <div class="section-header">
+                <span class="label"><i class="fas fa-images"></i> 作品展示</span>
+                <h2 class="section-title">代表 <span class="highlight">作品</span></h2>
+                <p class="section-desc">部分已完成或开发中的模型作品，闲鱼有售部分成品。</p>
+                <div class="doodle-line"></div>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <span class="gallery-icon"><i class="fas fa-cat"></i></span>
+                    <div class="gallery-name">莫本猫猫</div>
+                    <div class="gallery-desc">VRChat 模型 · XG108自改</div>
+                    <span class="gallery-tag sold">✦ 已售</span>
+                </div>
+                <div class="gallery-item">
+                    <span class="gallery-icon"><i class="fas fa-dog"></i></span>
+                    <div class="gallery-name">豆狗</div>
+                    <div class="gallery-desc">VRChat 模型 · 安卓适配</div>
+                    <span class="gallery-tag available">✦ 停止</span>
+                </div>
+                <div class="gallery-item">
+                    <span class="gallery-icon"><i class="fas fa-cat"></i></span>
+                    <div class="gallery-name">星郁</div>
+                    <div class="gallery-desc">VRChat 模型 · 致郁风</div>
+                    <span class="gallery-tag sold">✦ 待售</span>
+                </div>
+                <div class="gallery-item">
+                    <span class="gallery-icon"><i class="fas fa-clock"></i></span>
+                    <div class="gallery-name">待更新…</div>
+                    <div class="gallery-desc">VRChat 插件 · 无</div>
+                    <span class="gallery-tag available">✦ 待更新…</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 开发路线图 (新增) ===== -->
+    <section id="roadmap">
+        <div class="container">
+            <div class="section-header">
+                <span class="label"><i class="fas fa-road"></i> 开发路线图</span>
+                <h2 class="section-title">计划与 <span class="highlight">进度</span></h2>
+                <p class="section-desc">我们正在做的事和未来的规划，透明化呈现每一步。</p>
+                <div class="doodle-line"></div>
+            </div>
+            <div class="roadmap-list">
+                <div class="roadmap-item">
+                    <span class="roadmap-icon"><i class="fas fa-check-circle"></i></span>
+                    <div class="roadmap-content">
+                        <div class="roadmap-title">XG08 群组网站上线</div>
+                        <div class="roadmap-desc">VRChat 群组和 QQ 群组已建立并持续运营中</div>
+                    </div>
+                    <span class="roadmap-status done">✓ 已完成</span>
+                </div>
+                <div class="roadmap-item">
+                    <span class="roadmap-icon"><i class="fas fa-spinner"></i></span>
+                    <div class="roadmap-content">
+                        <div class="roadmap-title">插件工具开发</div>
+                        <div class="roadmap-desc">VRChat 辅助插件，提升虚拟世界交互体验</div>
+                    </div>
+                    <span class="roadmap-status ongoing">● 进行中</span>
+                </div>
+                <div class="roadmap-item">
+                    <span class="roadmap-icon"><i class="fas fa-store"></i></span>
+                    <div class="roadmap-content">
+                        <div class="roadmap-title">Booth 店铺运营</div>
+                        <div class="roadmap-desc">上架原创模型与插件，开启商业化探索</div>
+                    </div>
+                    <span class="roadmap-status ongoing">● 进行中</span>
+                </div>
+                <div class="roadmap-item">
+                    <span class="roadmap-icon"><i class="fas fa-cube"></i></span>
+                    <div class="roadmap-content">
+                        <div class="roadmap-title">原创模型系列</div>
+                        <div class="roadmap-desc">规划中的原创 VRChat 模型，低产高质路线</div>
+                    </div>
+                    <span class="roadmap-status planning">◈ 规划中</span>
+                </div>
+                <div class="roadmap-item">
+                    <span class="roadmap-icon"><i class="fas fa-users"></i></span>
+                    <div class="roadmap-content">
+                        <div class="roadmap-title">社区扩展</div>
+                        <div class="roadmap-desc">更多社群活动与互动玩法，等待时机</div>
+                    </div>
+                    <span class="roadmap-status planning">◈ 规划中</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 开发日志 (新增) ===== -->
+    <section id="logs">
+        <div class="container">
+            <div class="section-header">
+                <span class="label"><i class="fas fa-pen-fancy"></i> 开发日志</span>
+                <h2 class="section-title">最近 <span class="highlight">动态</span></h2>
+                <p class="section-desc">记录工作室的每一步进展，保持更新。</p>
+                <div class="doodle-line"></div>
+            </div>
+            <div class="logs-grid">
+                <div class="log-item">
+                    <div class="log-date">2026.07.22</div>
+                    <div class="log-title">部署并且上线该网站</div>
+                    <div class="log-desc">我们在打磨了好几个版本过后，最终选择了V2.1以这个版本呈现给大家</div>
+                    <span class="log-tag">✦ 开发</span>
+                </div>
+                <div class="log-item">
+                    <div class="log-date">2026.07.21</div>
+                    <div class="log-title">QQ群停止维护</div>
+                    <div class="log-desc">抱歉暂时停止维护</div>
+                    <span class="log-tag">✦ 发布</span>
+                </div>
+                <div class="log-item">
+                    <div class="log-date">2026.07.18</div>
+                    <div class="log-title">新模型概念进入待发售</div>
+                    <div class="log-desc">经过之前的模型调研，我们制作了新的模型，但愿你们喜欢</div>
+                    <span class="log-tag">✦ 设计</span>
+                </div>
+                <div class="log-item">
+                    <div class="log-date">2026.07.14</div>
+                    <div class="log-title">修改了 XG08 项目的群组</div>
+                    <div class="log-desc">更新了规则和相关介绍</div>
+                    <span class="log-tag">✦ 社区</span>
+                </div>
+       
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 愿望投票 (最后要不要加呢…) ===== -->
+    <section id="vote">
+        <div class="container">
+            <div class="section-header">
+                <span class="label"><i class="fas fa-heart"></i> 愿望投票</span>
+                <h2 class="section-title">下一款 <span class="highlight">做什么</span></h2>
+                <p class="section-desc">投票选出你最期待的下一个模型，我们会参考大家的意愿！</p>
+                <div class="doodle-line"></div>
+            </div>
+            <div class="vote-grid" id="voteGrid">
+                <div class="vote-card" data-id="1">
+                    <span class="vote-icon"><i class="fas fa-robot"></i></span>
+                    <div class="vote-name">无数据</div>
+                    <div class="vote-desc">无数据</div>
+                    <div class="vote-bar-wrap"><div class="vote-fill" style="width:0%;"></div></div>
+                    <div class="vote-count"><span>0%</span><span>0 票</span></div>
+                    <button class="vote-btn" onclick="vote(this)">投票</button>
+                </div>
+                <div class="vote-card" data-id="2">
+                    <span class="vote-icon"><i class="fas fa-robot"></i></span>
+                    <div class="vote-name">无数据</div>
+                    <div class="vote-desc">无数据</div>
+                    <div class="vote-bar-wrap"><div class="vote-fill" style="width:0%;"></div></div>
+                    <div class="vote-count"><span>0%</span><span>0 票</span></div>
+                    <button class="vote-btn" onclick="vote(this)">投票</button>
+                </div>
+                <div class="vote-card" data-id="3">
+                    <span class="vote-icon"><i class="fas fa-robot"></i></span>
+                    <div class="vote-name">无数据</div>
+                    <div class="vote-desc">无数据</div>
+                    <div class="vote-bar-wrap"><div class="vote-fill" style="width:0%;"></div></div>
+                    <div class="vote-count"><span>0%</span><span>0 票</span></div>
+                    <button class="vote-btn" onclick="vote(this)">投票</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 统计面板 (xiao pi che的新增想法) ===== -->
+    <section id="stats">
+        <div class="container">
+            <div class="section-header">
+                <span class="label"><i class="fas fa-chart-simple"></i> 数据一览</span>
+                <h2 class="section-title">一些 <span class="highlight">数字</span></h2>
+                <p class="section-desc">工作室的成长轨迹，记录每一个小小的里程碑。</p>
+                <div class="doodle-line"></div>
+            </div>
+            <div class="stats-panel">
+                <div class="stat-card">
+                    <span class="stat-patch">✦</span>
+                    <span class="stat-icon"><i class="fas fa-users"></i></span>
+                    <span class="stat-number" id="statMembers">8</span>
+                    <span class="stat-label">群组总人数</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-patch">✦</span>
+                    <span class="stat-icon"><i class="fas fa-cube"></i></span>
+                    <span class="stat-number" id="statModels">2</span>
+                    <span class="stat-label">已发布模型</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-patch">✦</span>
+                    <span class="stat-icon"><i class="fas fa-code"></i></span>
+                    <span class="stat-number" id="statPlugins">0</span>
+                    <span class="stat-label">开发中插件</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-patch">✦</span>
+                    <span class="stat-icon"><i class="fas fa-calendar"></i></span>
+                    <span class="stat-number">2025</span>
+                    <span class="stat-label">成立年份</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Members ===== -->
+    <section id="members">
+        <div class="container">
+            <div class="section-header">
+                <span class="label"><i class="fas fa-user-group"></i> 核心团队</span>
+                <h2 class="section-title">三位 <span class="highlight">创作者</span></h2>
+                <p class="section-desc">小而精的团队，每一份热爱都倾注在作品之中。</p>
+                <div class="doodle-line"></div>
+            </div>
+            <div class="members-grid">
+                <div class="member-card">
+                    <span class="tiny-badge">主理</span>
+                    <div class="avatar">X</div>
+                    <h4>XG108</h4>
+                    <div class="role"><i class="fas fa-crown"></i> 主创建人</div>
+                    <p>工作室发起者，统筹全局，把控品质方向。</p>
+                    <div class="member-status"><span class="status-dot online"></span> 在线 · 统筹中</div>
+                </div>
+                <div class="member-card">
+                    <span class="tiny-badge">技术</span>
+                    <div class="avatar h">H</div>
+                    <h4>xiao_hui114514</h4>
+                    <div class="role"><i class="fas fa-code"></i> 核心成员</div>
+                    <p>技术担当，负责模型制作与插件开发。</p>
+                    <div class="member-status"><span class="status-dot online"></span> 在线 · 编码中</div>
+                </div>
+                <div class="member-card">
+                    <span class="tiny-badge">创意</span>
+                    <div class="avatar p">P</div>
+                    <h4>xiao pi che</h4>
+                    <div class="role"><i class="fas fa-paintbrush"></i> 核心成员</div>
+                    <p>创意担当，专注于模型设计与视觉表现。</p>
+                    <div class="member-status"><span class="status-dot away"></span> 离线 · 休息中</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 订阅 ===== -->
+    <section id="subscribe">
+        <div class="container">
+            <div class="subscribe-box">
+                <span class="patch-sub">✦ 订阅</span>
+                <h4><i class="fas fa-envelope" style="color:#b89fc9;margin-right:8px;"></i> 获取更新</h4>
+                <p>订阅后，我们会通过邮件通知你新作品发布和工作室动态。</p>
+                <form class="sub-form" onsubmit="handleSubscribe(event)">
+                    <input type="email" placeholder="你的邮箱地址" required />
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> 订阅</button>
+                </form>
+                <p style="font-size:0.7rem;color:#b0a0b8;margin-top:10px;margin-bottom:0;">不会发送垃圾邮件，随时可以取消订阅</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="label"><i class="fas fa-paper-plane"></i> 联系我们</span>
+                <h2 class="section-title">期待与您 <span class="highlight">交流</span></h2>
+                <p class="section-desc">无论是合作、建议还是单纯交流，都欢迎与我们取得联系。</p>
+                <div class="doodle-line"></div>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h3>找到我们</h3>
+                    <p>您可以通过以下渠道与 XG108 工作室取得联系。我们会在第一时间回复您。</p>
+                    <div class="contact-item">
+                        <div class="ci-icon"><i class="fab fa-qq"></i></div>
+                        <div class="ci-text">
+                            <div class="label">QQ 群组</div>
+                            <div class="value"><a href="#" onclick="copyToClipboard('1064117555','QQ群号'); return false;">1064117555</a></div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="ci-icon"><i class="fas fa-store"></i></div>
+                        <div class="ci-text">
+                            <div class="label">Booth 平台</div>
+                            <div class="value"><a href="https://xghy108.booth.pm/" target="_blank" rel="noopener">xghy108.booth.pm</a></div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="ci-icon"><i class="fas fa-vr-cardboard"></i></div>
+                        <div class="ci-text">
+                            <div class="label">VRChat 群组</div>
+                            <div class="value"><a href="#" onclick="copyToClipboard('XG108.0443','VRChat群组名'); return false;">XG108.0443</a></div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="ci-text">
+                            <div class="label">邮箱</div>
+                            <div class="value"><a href="mailto:sijinhong00@gmail.com">sijinhong00@gmail.com</a></div>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="ci-icon"><i class="fas fa-tag"></i></div>
+                        <div class="ci-text">
+                            <div class="label">闲鱼</div>
+                            <div class="value"><a href="#" onclick="showToast('🛒 闲鱼搜索「XG108模型」即可找到我们'); return false;">XG108 模型</a></div>
+                        </div>
+                    </div>
+                    <div class="note-box">
+                        <span class="patch-tag">✦ 更新</span>
+                        <i class="fas fa-info-circle"></i>
+                        现有网站 <strong>http://xg08xg08.abrdns.com/</strong> 为 VRChat 群组网站，
+                        自 2025 年 7 月起搭建维护，目前持续运营中。
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <span class="patch-note">✉ 快速</span>
+                    <h4><i class="fas fa-message" style="color:#b89fc9;margin-right:8px;"></i> 留言板</h4>
+                    <p>留下您的信息，我们会尽快回复。</p>
+                    <form id="contactForm" onsubmit="handleForm(event)">
+                        <input type="text" placeholder="您的称呼" required />
+                        <input type="email" placeholder="邮箱地址" required />
+                        <textarea placeholder="留言内容……" required></textarea>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> 发送留言</button>
+                    </form>
+                    <p style="font-size:0.78rem;color:#b0a0b8;margin-top:12px;text-align:center;">
+                        <i class="fas fa-lock"></i> 您的信息将被保密
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Footer ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo"><i class="fas fa-cube"></i> XG108 工作室</div>
+            <div class="footer-links">
+                <a href="#about">工作室</a>
+                <a href="#projects">项目</a>
+                <a href="#gallery">作品</a>
+                <a href="#roadmap">路线图</a>
+                <a href="#members">成员</a>
+                <a href="#contact">联系</a>
+                <a href="http://xg08xg08.abrdns.com/" target="_blank" rel="noopener">群组网站</a>
+            </div>
+            <div class="copy">
+                &copy; 2025 XG108 工作室 · 低产高质 · 手作匠心
+                <span class="footer-patch">◈ 手工制作</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== 回到顶部 ===== -->
+    <button class="back-to-top" id="backToTop" aria-label="回到顶部">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- ===== 小纸条 ===== -->
+    <button class="sticky-note-trigger" id="noteTrigger">
+        <i class="fas fa-paperclip"></i> 小纸条
+    </button>
+    <div class="note-popup" id="notePopup">
+        <span class="close-btn" id="noteClose">✕</span>
+        <p style="margin-bottom:6px;">📝 给 XG108 的留言</p>
+        <p style="font-size:0.82rem;color:#6a5a7a;line-height:1.8;">
+            嗨！我是通过网站找到你们的。<br />
+            很喜欢你们的模型风格！<br />
+            <span style="display:inline-block;margin-top:6px;background:#ede4f0;padding:2px 14px;border-radius:30px;font-size:0.7rem;color:#8a7a9a;">—— 来自网站访客</span>
+        </p>
+    </div>
+
+    <!-- ===== Toast ===== -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">已复制</span>
+        <span class="toast-close" id="toastClose">✕</span>
+    </div>
+
+    <script>
+        // ============================================================
+        //  0. 公告栏关闭
+        // ============================================================
+        const announceBar = document.getElementById('announcementBar');
+        const closeAnnounce = document.getElementById('closeAnnounce');
+        if (localStorage.getItem('xg108_announce') === 'hidden') {
+            announceBar.classList.add('hidden');
+        }
+        closeAnnounce.addEventListener('click', () => {
+            announceBar.classList.add('hidden');
+            localStorage.setItem('xg108_announce', 'hidden');
+        });
+
+        // ============================================================
+        //  1. 移动端菜单
+        // ============================================================
+        const toggle = document.getElementById('navToggle');
+        const links = document.getElementById('navLinks');
+        toggle.addEventListener('click', function() {
+            links.classList.toggle('open');
+            const icon = this.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+        document.querySelectorAll('.nav-links a').forEach(a => {
+            a.addEventListener('click', () => {
+                links.classList.remove('open');
+                const icon = toggle.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+        });
+
+        // ============================================================
+        //  2. 夜间模式
+        // ============================================================
+        const darkToggle = document.getElementById('darkToggle');
+        const body = document.body;
+        let darkMode = localStorage.getItem('xg108_dark') === 'true';
+
+        function applyDarkMode(on) {
+            body.classList.toggle('dark-mode', on);
+            darkToggle.innerHTML = on ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            localStorage.setItem('xg108_dark', String(on));
+        }
+        applyDarkMode(darkMode);
+
+        darkToggle.addEventListener('click', () => {
+            darkMode = !darkMode;
+            applyDarkMode(darkMode);
+            showToast(darkMode ? '🌙 夜间模式已开启' : '☀️ 日间模式已开启');
+        });
+
+        // ============================================================
+        //  3. 访客计数器
+        // ============================================================
+        (function visitorCounter() {
+            const today = new Date().toDateString();
+            const stored = localStorage.getItem('xg108_visitor');
+            let count = 0;
+            if (stored) {
+                const data = JSON.parse(stored);
+                if (data.date === today) {
+                    count = data.count + 1;
+                } else {
+                    count = 1;
+                }
+            } else {
+                count = 1;
+            }
+            localStorage.setItem('xg108_visitor', JSON.stringify({ date: today, count: count }));
+            document.getElementById('visitorCount').textContent = count;
+        })();
+
+        // ============================================================
+        //  4. 复制功能
+        // ============================================================
+        function copyToClipboard(text, label) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('✅ 已复制 ' + label + '：' + text);
+                }).catch(() => {
+                    fallbackCopy(text, label);
+                });
+            } else {
+                fallbackCopy(text, label);
+            }
+        }
+
+        function fallbackCopy(text, label) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            try {
+                document.execCommand('copy');
+                showToast('✅ 已复制 ' + label + '：' + text);
+            } catch (e) {
+                showToast('请手动复制：' + text);
+            }
+            document.body.removeChild(el);
+        }
+
+        // ============================================================
+        //  5. Toast
+        // ============================================================
+        const toastEl = document.getElementById('toast');
+        const toastMsg = document.getElementById('toastMessage');
+        const toastClose = document.getElementById('toastClose');
+        let toastTimer = null;
+
+        function showToast(msg) {
+            toastMsg.textContent = msg;
+            toastEl.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toastEl.classList.remove('show');
+            }, 3000);
+        }
+
+        toastClose.addEventListener('click', () => {
+            toastEl.classList.remove('show');
+            clearTimeout(toastTimer);
+        });
+
+        // ============================================================
+        //  6. 表单提交
+        // ============================================================
+        function handleForm(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('.btn');
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 发送中...';
+            btn.disabled = true;
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-check"></i> 已发送！';
+                btn.style.background = '#7a5a8a';
+                setTimeout(() => {
+                    btn.innerHTML = orig;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                    e.target.reset();
+                    showToast('✅ 留言已发送！我们会尽快回复您。');
+                }, 1800);
+            }, 1200);
+        }
+
+        // ============================================================
+        //  7. 订阅
+        // ============================================================
+        function handleSubscribe(e) {
+            e.preventDefault();
+            const input = e.target.querySelector('input');
+            const btn = e.target.querySelector('.btn');
+            const orig = btn.innerHTML;
+            const email = input.value;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 处理中...';
+            btn.disabled = true;
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-check"></i> 已订阅！';
+                btn.style.background = '#6aaa8a';
+                setTimeout(() => {
+                    btn.innerHTML = orig;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                    input.value = '';
+                    showToast('✅ 订阅成功！感谢你的关注 💜');
+                }, 1800);
+            }, 1200);
+        }
+
+        // ============================================================
+        //  8. 投票功能
+        // ============================================================
+        function vote(btn) {
+            if (btn.classList.contains('voted')) {
+                showToast('你已经投过票啦！');
+                return;
+            }
+            const card = btn.closest('.vote-card');
+            const id = card.dataset.id;
+            // 存储投票状态
+            const voted = JSON.parse(localStorage.getItem('xg108_votes') || '[]');
+            if (voted.includes(id)) {
+                showToast('你已经投过票啦！');
+                return;
+            }
+            voted.push(id);
+            localStorage.setItem('xg108_votes', JSON.stringify(voted));
+
+            // 更新UI
+            btn.classList.add('voted');
+            btn.textContent = '已投票 ✓';
+            // 模拟票数增加
+            const fill = card.querySelector('.vote-fill');
+            const current = parseFloat(fill.style.width);
+            const newWidth = Math.min(current + 3, 100);
+            fill.style.width = newWidth + '%';
+            const countSpan = card.querySelector('.vote-count span:last-child');
+            const currentCount = parseInt(countSpan.textContent);
+            countSpan.textContent = (currentCount + 1) + ' 票';
+            const percentSpan = card.querySelector('.vote-count span:first-child');
+            percentSpan.textContent = Math.round(newWidth) + '%';
+            showToast('✅ 投票成功！感谢你的参与');
+        }
+
+        // ============================================================
+        //  9. 小纸条
+        // ============================================================
+        const noteTrigger = document.getElementById('noteTrigger');
+        const notePopup = document.getElementById('notePopup');
+        const noteClose = document.getElementById('noteClose');
+
+        noteTrigger.addEventListener('click', () => {
+            notePopup.classList.toggle('show');
+        });
+        noteClose.addEventListener('click', () => {
+            notePopup.classList.remove('show');
+        });
+        document.addEventListener('click', (e) => {
+            if (notePopup.classList.contains('show') &&
+                !notePopup.contains(e.target) &&
+                !noteTrigger.contains(e.target)) {
+                notePopup.classList.remove('show');
+            }
+        });
+
+        // ============================================================
+        //  10. 回到顶部
+        // ============================================================
+        const backBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backBtn.classList.add('show');
+            } else {
+                backBtn.classList.remove('show');
+            }
+        });
+        backBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ============================================================
+        //  11. 键盘快捷键
+        // ============================================================
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            const key = e.key.toLowerCase();
+            if (key === 'd') {
+                darkMode = !darkMode;
+                applyDarkMode(darkMode);
+                showToast(darkMode ? '🌙 夜间模式已开启' : '☀️ 日间模式已开启');
+                e.preventDefault();
+            } else if (key === 'h') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                e.preventDefault();
+            } else if (key === '?') {
+                showToast('⌨️ D=夜间模式  H=回到顶部  ?=此提示');
+                e.preventDefault();
+            } else if (key === 'escape') {
+                notePopup.classList.remove('show');
+                toastEl.classList.remove('show');
+            }
+        });
+
+        // ============================================================
+        //  12. 控制台彩蛋
+        // ============================================================
+        console.log('%c ✦ XG108 工作室 ✦ ', 'background: #8b6f9e; color: #fff; font-size: 20px; padding: 10px 24px; border-radius: 30px; font-weight: 700;');
+        console.log('%c 低产 · 高质 · 手作匠心 ', 'color: #b89fc9; font-size: 14px;');
+        console.log('📮 QQ群: 1064117555');
+        console.log('🛒 Booth: https://xghy108.booth.pm/');
+        console.log('🎮 VRChat: XG108.0443');
+        console.log('📧 邮箱: sijinhong00@gmail.com');
+        console.log('🛍️ 闲鱼: XG108 模型');
+        console.log('💜 感谢访问！ 按 ? 查看快捷键');
+
+        // ============================================================
+        //  13. 数字递增动画 (统计面板)
+        // ============================================================
+        function animateNumber(el, target, duration) {
+            let start = 0;
+            const step = Math.max(1, Math.floor(target / 60));
+            const interval = duration / 60;
+            const timer = setInterval(() => {
+                start += step;
+                if (start >= target) {
+                    start = target;
+                    clearInterval(timer);
+                }
+                el.textContent = start;
+            }, interval);
+        }
+
+        const statMembers = document.getElementById('statMembers');
+        const statModels = document.getElementById('statModels');
+        const statPlugins = document.getElementById('statPlugins');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateNumber(statMembers, 8, 1200);
+                    animateNumber(statModels, 2, 800);
+                    animateNumber(statPlugins, 0, 600);
+                    observer.disconnect();
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(document.getElementById('stats'));
+
+        // ============================================================
+        //  14. 投票按钮恢复状态
+        // ============================================================
+        (function restoreVotes() {
+            const voted = JSON.parse(localStorage.getItem('xg108_votes') || '[]');
+            document.querySelectorAll('.vote-card').forEach(card => {
+                const id = card.dataset.id;
+                if (voted.includes(id)) {
+                    const btn = card.querySelector('.vote-btn');
+                    btn.classList.add('voted');
+                    btn.textContent = '已投票 ✓';
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>
