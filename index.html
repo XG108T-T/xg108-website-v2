@@ -3780,7 +3780,7 @@
             });
         })();
 
-        // ============================================================
+         // ============================================================
         //  15. 音乐小纸条 + 播放器
         // ============================================================
         (function musicNote() {
@@ -3834,15 +3834,72 @@
                 // 创建音频对象
                 const audio = new Audio();
                 // ⚠️ 改这里：换成你的音乐文件地址
-                audio.src = 'music.mp3';
+                audio.src = 'music/bgm.mp3';
                 audio.loop = true;
-                audio.volume = 0.25;
+                audio.volume = 0.55;
 
                 let isPlaying = false;
 
                 // 显示指示器
                 indicator.style.display = 'flex';
                 indicatorText.textContent = '🎵 正在播放';
+                // ===== 音量滑块（用户可自己调节） =====
+                const volumeSlider = document.createElement('input');
+                volumeSlider.type = 'range';
+                volumeSlider.min = '0';
+                volumeSlider.max = '1';
+                volumeSlider.step = '0.01';
+                volumeSlider.value = localStorage.getItem('xg108_music_volume') || '0.7';
+                volumeSlider.style.width = '50px';
+                volumeSlider.style.height = '4px';
+                volumeSlider.style.background = '#ede4f0';
+                volumeSlider.style.borderRadius = '10px';
+                volumeSlider.style.outline = 'none';
+                volumeSlider.style.appearance = 'none';
+                volumeSlider.style.cursor = 'pointer';
+                volumeSlider.style.marginLeft = '8px';
+                volumeSlider.style.verticalAlign = 'middle';
+
+                // 滑块的拇指样式
+                const styleTag = document.createElement('style');
+                styleTag.textContent = `
+                    input[type="range"]::-webkit-slider-thumb {
+                        -webkit-appearance: none;
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 50%;
+                        background: #8b6f9e;
+                        cursor: pointer;
+                        border: 1px solid #d5c8d8;
+                    }
+                    input[type="range"]::-moz-range-thumb {
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 50%;
+                        background: #8b6f9e;
+                        cursor: pointer;
+                        border: 1px solid #d5c8d8;
+                    }
+                `;
+                document.head.appendChild(styleTag);
+
+                // 把滑块加到指示器里
+                indicator.appendChild(volumeSlider);
+
+                // 滑块控制音量
+                volumeSlider.addEventListener('input', function() {
+                    audio.volume = parseFloat(this.value);
+                    localStorage.setItem('xg108_music_volume', this.value);
+                });
+
+                // 恢复之前保存的音量
+                const savedVol = localStorage.getItem('xg108_music_volume');
+                if (savedVol) {
+                    audio.volume = parseFloat(savedVol);
+                    volumeSlider.value = savedVol;
+                } else {
+                    audio.volume = 0.7;
+                }
 
                 // 尝试播放
                 audio.play().catch(() => {
@@ -3895,7 +3952,7 @@
             }
 
             console.log('🎵 音乐小纸条已加载');
-            console.log('📀 告诉XG108如需更换音乐，修改 audio.src 的地址');
+            console.log('📀 如需更换音乐，修改 audio.src 的地址');
         })();
     </script>
 
